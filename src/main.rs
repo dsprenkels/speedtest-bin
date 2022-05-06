@@ -118,7 +118,6 @@ where
     write!(cursor, "HTTP/1.1 {}\r\n", status)?;
     write!(cursor, "Content-Type: text/plain\r\n")?;
     write!(cursor, "Content-Length: {}\r\n", body.len())?;
-    write!(cursor, "Connection: Keep-Alive\r\n")?;
     write!(cursor, "\r\n")?; // End of headers
     write!(cursor, "{}", body)?;
     extra_headers(&mut cursor)?;
@@ -204,7 +203,6 @@ async fn process_socket(mut stream: TcpStream) -> anyhow::Result<()> {
     write!(cursor, "HTTP/1.1 200 OK\r\n")?;
     write!(cursor, "Content-Type: text/plain\r\n")?;
     write!(cursor, "Content-Length: {}\r\n", response_size)?;
-    write!(cursor, "Connection: Keep-Alive\r\n")?;
     write!(cursor, "\r\n")?; // End of headers
     let header_length = cursor.position().try_into()?;
     let headerstr = &buf[0..header_length];
